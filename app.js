@@ -786,6 +786,12 @@ function buyItem(buyer, item, itemIndex = -1) {
     
     // Find seller and update balance
     const seller = gameState.users.find(user => user.id === item.sellerId);
+    if (!seller) {
+        // Try loading game data again in case of sync issues
+        loadGameData();
+        const seller = gameState.users.find(user => user.id === item.sellerId);
+    }
+    
     if (seller) {
         seller.balance += item.price;
         // Save immediately to ensure other users see the updated balance
