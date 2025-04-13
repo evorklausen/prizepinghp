@@ -786,8 +786,12 @@ function buyItem(buyer, item, itemIndex = -1) {
             sellerId: item.sellerId,
             availableUsers: gameState.users.map(u => u.id)
         });
-        alert('Seller not found. Please try again later.');
-        return; // Seller not found
+        alert('This listing is no longer valid. The item will be removed from the marketplace.');
+        
+        // Remove invalid listing from marketplace
+        gameState.marketplace.splice(itemIndex, 1);
+        saveGameData();
+        return;
     }
     
     // Transfer money
