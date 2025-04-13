@@ -782,7 +782,11 @@ function buyItem(buyer, item, itemIndex = -1) {
     const seller = gameState.users.find(user => user.id === item.sellerId);
     
     if (!seller) {
-        alert('Seller not found.');
+        console.error('Seller not found:', {
+            sellerId: item.sellerId,
+            availableUsers: gameState.users.map(u => u.id)
+        });
+        alert('Seller not found. Please try again later.');
         return; // Seller not found
     }
     
