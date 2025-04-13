@@ -781,10 +781,17 @@ function buyItem(buyer, item, itemIndex = -1) {
     // Transfer money directly
     buyer.balance -= item.price;
     
+    // Load latest data to ensure we have current seller info
+    loadGameData();
+    
     // Find seller and update balance
     const seller = gameState.users.find(user => user.id === item.sellerId);
     if (seller) {
         seller.balance += item.price;
+        // Save immediately to ensure other users see the updated balance
+        saveGameData();
+    } else {
+        alert('Seller not found. Item will still be removed from marketplace.');
     }
     
     // Remove item from marketplace regardless of seller status
