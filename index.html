@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrizePin - Guess the PIN, Win Prizes!</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>PrizePin</h1>
+            <div id="user-info" class="hidden">
+                <span id="username-display"></span>
+                <span id="balance-display">Balance: $0</span>
+                <button id="logout-btn">Logout</button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Authentication Section -->
+            <section id="auth-section">
+                <div class="auth-container">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="login">Login</button>
+                        <button class="tab-btn" data-tab="signup">Sign Up</button>
+                    </div>
+                    
+                    <div id="login-form" class="auth-form active">
+                        <h2>Login</h2>
+                        <form id="login-form-element">
+                            <div class="form-group">
+                                <label for="login-pin">PIN:</label>
+                                <input type="password" id="login-pin" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="login-name">Username:</label>
+                                <input type="text" id="login-name" required>
+                            </div>
+                            <button type="submit" class="btn primary-btn">Login</button>
+                        </form>
+                    </div>
+                    
+                    <div id="signup-form" class="auth-form">
+                        <h2>Create Account</h2>
+                        <form id="signup-form-element">
+                            <div class="form-group">
+                                <label for="signup-pin">Create PIN (8 digits required):</label>
+                                <input type="password" id="signup-pin" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-name">Choose Username:</label>
+                                <input type="text" id="signup-name" required>
+                            </div>
+                            <button type="submit" class="btn primary-btn">Create Account</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Game Section (Hidden until logged in) -->
+            <section id="game-section" class="hidden">
+                <div class="game-container">
+                    <div class="pin-game">
+                        <h2>Guess the 6-Digit PIN</h2>
+                        <div class="pin-display">
+                            <div id="timer">30</div>
+                            <div id="potential-prize">Potential Payout: <span id="prize-name">Mystery Item</span></div>
+                        </div>
+                        <form id="pin-guess-form">
+                            <input type="text" id="pin-guess" maxlength="6" pattern="[0-9]{6}" required>
+                            <button type="submit" class="btn primary-btn">Submit Guess</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Inventory Section -->
+            <section id="inventory-section" class="hidden">
+                <h2>Your Inventory</h2>
+                <div id="inventory-items" class="items-grid"></div>
+            </section>
+
+            <!-- Marketplace Section -->
+            <section id="marketplace-section" class="hidden">
+                <h2>Marketplace</h2>
+                <div id="marketplace-items" class="items-grid"></div>
+            </section>
+        </main>
+
+        <!-- Modal for Prize Win -->
+        <div id="prize-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Congratulations!</h2>
+                <p>You won: <span id="won-prize-name"></span></p>
+                <div class="prize-options">
+                    <button id="sell-market-btn" class="btn">Sell at Market Price ($<span id="market-price"></span>)</button>
+                    <button id="custom-price-btn" class="btn">Set Custom Price</button>
+                    <button id="keep-prize-btn" class="btn">Keep Item</button>
+                </div>
+                <div id="custom-price-container" class="hidden">
+                    <input type="number" id="custom-price-input" min="1" step="1">
+                    <button id="confirm-custom-price" class="btn">Confirm Price</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav id="game-nav" class="hidden">
+            <button class="nav-btn active" data-section="game-section">Game</button>
+            <button class="nav-btn" data-section="inventory-section">Inventory</button>
+            <button class="nav-btn" data-section="marketplace-section">Marketplace</button>
+        </nav>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
