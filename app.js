@@ -778,25 +778,17 @@ function buyItem(buyer, item, itemIndex = -1) {
         return; // Item not found
     }
     
-    // Find the seller
-    const seller = gameState.users.find(user => user.id === item.sellerId);
+    // Transfer money directly
+    buyer.balance -= item.price;
     
-    if (!seller) {
-        console.error('Seller not found:', {
-            sellerId: item.sellerId,
-            availableUsers: gameState.users.map(u => u.id)
-        });
-        alert('This listing is no longer valid. The item will be removed from the marketplace.');
-        
-        // Remove invalid listing from marketplace
-        gameState.marketplace.splice(itemIndex, 1);
-        saveGameData();
-        return;
+    // Find seller and update balance
+    const seller = gameState.users.find(user => user.id === item.sellerId);
+    if (seller) {
+        seller.balance += item.price;
     }
     
-    // Transfer money
-    buyer.balance -= item.price;
-    seller.balance += item.price;
+    // Remove item from marketplace regardless of seller status
+    gameState.marketplace.splice(itemIndex, 1);
     
     // Add item to buyer's inventory
     const boughtItem = {
